@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+
+    <!--FONT IMPORT-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <script type="x-shader/x-vertex" id="vertexshader">
+
+      uniform float u_size;
+      
+      void main() {
+      
+          vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+      
+          for(float i = 0.0; i<10.0; i++){
+          gl_PointSize = u_size * ( 300.0 / -mvPosition.z );
+          }
+
+          gl_Position = projectionMatrix * mvPosition;
+      
+      }
+
+      /* 	let uniforms = {
+        u_size: { value: 10.0 }
+      };
+      const shaderMaterial = new THREE.ShaderMaterial( {
+        uniforms: uniforms,
+        vertexShader: document.getElementById( 'vertexshader' ).textContent,
+        fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+      } ); */
+      
+      </script>
+      
+      <script type="x-shader/x-fragment" id="fragmentshader">
+      
+      
+      void main() {
+      
+          gl_FragColor = vec4( vec3(1.0,0.0,1.0), 1.0 );
+      
+      }
+      
+      </script>
+  
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+
+      other shader try:
+         coord.x +=  0.95*sin(coord.x*coord.y*mousey*0.1 + time*0.1);
+          coord.x +=  3.0*reflect(0.00003*sin(coord.y*mousey*0.1 + time*0.1),coord.y);
+          coord.y +=  0.95*sin(coord.x*coord.x*mousex*0.1 + time*0.1); 
+          coord.y +=  3.0*reflect(0.00003*sin(coord.x*mousex*0.1 + time*0.1),coord.x); 
+    -->
+  </body>
+</html>
