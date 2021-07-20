@@ -15,7 +15,7 @@
 
 #Usage:
 - git clone https://github.com/bernabranco/react-threejs-buffer-geometry.git
-- cd react-threejs-plane-geometry
+- cd react-threejs-buffer-geometry
 - npm install
 - npm start
 - open browser on 'localhost:3000'
