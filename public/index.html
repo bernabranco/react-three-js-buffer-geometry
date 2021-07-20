@@ -36,28 +36,37 @@
 
     <script type="x-shader/x-vertex" id="vertexshader">
 
-      uniform float u_size;
-      
-      void main() {
-      
-          vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-      
-          for(float i = 0.0; i<10.0; i++){
-          gl_PointSize = u_size * ( 300.0 / -mvPosition.z );
-          }
+      // 1. Define the attributes
+      attribute vec4 aCurve;
+      attribute vec3 aColor;
+      varying vec3 vColor;
 
-          gl_Position = projectionMatrix * mvPosition;
-      
+      // Sphere positioning logic
+      vec3 getCurvePosition(float progress, float radius, float offset){
+        
+        vec3 pos = vec3(0.);
+        pos.x += cos(progress *PI *8. ) * radius ;
+        pos.y += sin(progress *PI*8.) * radius + sin(progress * PI *2.) * 30.;
+        pos.z += progress *200. - 200./2. + offset;
+        
+        return pos;
       }
-
-      /* 	let uniforms = {
-        u_size: { value: 10.0 }
-      };
-      const shaderMaterial = new THREE.ShaderMaterial( {
-        uniforms: uniforms,
-        vertexShader: document.getElementById( 'vertexshader' ).textContent,
-        fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
-      } ); */
+      void main(){
+        vec3 transformed = position;
+        
+        // 2. Extract values from attribute
+        float aRadius = aCurve.x;
+        float aZOffset = aCurve.z;
+        float aSpeed = aCurve.w;
+        float aProgress = aCurve.y;
+        
+        // 3. Get position and add it to the final position
+        vec3 curvePosition = getCurvePosition(aProgress, aRadius, aZOffset);
+        transformed += curvePosition;
+        
+        vColor = aColor;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.);
+      }
       
       </script>
       
@@ -66,7 +75,10 @@
       
       void main() {
       
-          gl_FragColor = vec4( vec3(1.0,0.0,1.0), 1.0 );
+        varying vec3 vColor;
+        void main(){
+          gl_FragColor = vec4(vColor, 1.);
+        }
       
       }
       
